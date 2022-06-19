@@ -1,0 +1,26 @@
+class Solution {
+public:
+    long long sellingWood(int m, int n, vector<vector<int>>& prices) {
+        vector<vector<long long int>> dp(m,vector<long long int>(n,0));
+        for(int i=0;i<prices.size();i++)
+        {
+            dp[prices[i][0]-1][prices[i][1]-1]=prices[i][2];
+        }
+        
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                for(int a=0;a<i;a++)
+                {
+                    dp[i][j]=max(dp[i][j],dp[a][j]+dp[i-a-1][j]);
+                }
+                for(int a=0;a<j;a++)
+                {
+                    dp[i][j]=max(dp[i][j],dp[i][a]+dp[i][j-a-1]);
+                }
+            }
+        }
+        return dp[m-1][n-1];
+    }
+};
